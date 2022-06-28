@@ -8,13 +8,10 @@ const response = (res, msg, results, status=200) => {
     message: msg,
   };
   
-  if(res){
-    data.result = results(data);
+  if(results){
+    data.result = results;
   }
-  return res.status(status).json({
-    success,
-    message: msg
-  });
+  return res.status(status).json(data);
 };
 
 module.exports = response;

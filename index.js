@@ -1,4 +1,6 @@
 require('dotenv').config();
+
+//require('dotenv').config();
 const express =  require('express');
 
 const app = express();
@@ -12,6 +14,7 @@ app.get('/', (req, res)=>{
     message: 'Backend is running well'
   });
 });
+//const portServer = process.env.PORT;
 
 app.use('/', require('./src/routes'));
 
@@ -24,5 +27,5 @@ app.use('*',(req,res)=>{
 
 
 app.listen(process.env.PORT, ()=>{
-  console.log('aplication is running in port 3333');
+  console.log(`aplication is running in port ${process.env.PORT}`);
 });

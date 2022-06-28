@@ -1,7 +1,10 @@
 const db = require('../helpers/db.js');
 
-exports.getALLUsers = (cb)=>{
-  db.query('SELECT * FROM users', (err, res)=>{
+exports.getAllUsers = (cb) => {
+  db.query('SELECT * FROM users', (err, res) => {
+    if(err) {
+      throw err;
+    }
     cb(res.rows);
   });
 };
