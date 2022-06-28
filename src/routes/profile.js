@@ -1,11 +1,11 @@
 //definisi methode untuk routes nya
-const profile = require('express').Router()
+const profile = require('express').Router();
 
-const profielController = require('../controllers/profile')
+const profielController = require('../controllers/profile');
 
-profile.get('/', profielController.getAllProfile)
-profile.post('/', profielController.postProfile)
-profile.delete('/', profielController.deleteProfile)
+profile.get('/', profielController.getAllProfile);
+profile.post('/', profielController.postProfile);
+profile.delete('/', profielController.deleteProfile);
 
 
 

@@ -1,14 +1,14 @@
-const response = require('../helpers/standardResponse')
-const transactions = require('../routes/transactions')
+const response = require('../helpers/standardResponse');
+//const transactions = require('../routes/transactions');
 
 exports.getTransactions = (req, res)=>{
-    return response(res, 'Get Transactions success')
-}
+  return response(res, 'Get Transactions success');
+};
 
 exports.postTransactions = (req, res)=>{
-    return response(res, 'Post transactions success')
-}
+  return response(res, 'Post transactions success');
+};
 
 exports.deleteTransactions = (req, res)=>{
-    return response(res, 'Delete transactions success')
-}
+  return response(res, 'Delete transactions success');
+};
