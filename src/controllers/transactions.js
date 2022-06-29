@@ -1,14 +1,35 @@
 const response = require('../helpers/standardResponse');
-//const transactions = require('../routes/transactions');
+const transModel = require('../models/transactions');
 
-exports.getTransactions = (req, res)=>{
-  return response(res, 'Get Transactions success');
+exports.getAllTrans= (req, res)=>{
+  transModel.getAllTrans((results)=>{
+    return response(res, 'Get All Trans success', results);
+  });
 };
 
-exports.postTransactions = (req, res)=>{
-  return response(res, 'Post transactions success');
+exports.detailTrans = (req, res)=>{
+  const {id} =req.params;
+  transModel.detailTrans(id, (results)=>{
+    return response(res, 'This Transaction Details', results);
+  });
 };
 
-exports.deleteTransactions = (req, res)=>{
-  return response(res, 'Delete transactions success');
+exports.createTrans = (req, res)=>{
+  transModel.createTrans(req.body, (results)=>{
+    return response(res, 'Post Transaction success', results);
+  });
+};
+
+exports.updateTrans = (req, res)=>{
+  const {id} =req.params;
+  transModel.updateTrans(id, req.body, (results)=>{
+    return response(res, 'update data success', results[0]);
+  });
+};
+
+exports.deleteTrans = (req, res)=>{
+  const {id} =req.params;
+  transModel.deleteTrans(id, (results)=>{
+    return response(res, 'Delete Transaction success', results[0]);
+  });
 };

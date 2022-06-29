@@ -13,7 +13,9 @@ exports.createUser = (data, cb)=>{
   const quer = 'INSERT INTO users(username, email, password, pin) VALUES ($1, $2, $3, $4) RETURNING *';
   const value = [data.username, data.email, data.password, data.pin];
   db.query(quer, value, (err, res)=>{
-    //console.log(res);
+    if(err) {
+      throw err;
+    }
     cb(res.rows);
   });
 };
@@ -23,6 +25,9 @@ exports.updateUser = (id, data, cb)=>{
   const value = [data.username, data.email, data.password, data.pin, id];
   db.query(quer, value, (err, res)=>{
     console.log(res);
+    if(err) {
+      throw err;
+    }
     cb(res.rows);
   }) ;
 };
@@ -32,9 +37,9 @@ exports.deleteUser = (id, cb) => {
   const value = [id];
   db.query(quer, value, (err, res)=>{
 
-    // if(err){
-    //   console.log(err);
-    // }
+    if(err) {
+      throw err;
+    }
     cb(res.rows);
   });
 };
@@ -43,11 +48,9 @@ exports.detailUser = (id, cb) => {
   const quer = 'SELECT username, email, password, pin FROM users WHERE id=$1';
   const value = [id];
   db.query(quer, value, (err, res)=>{
-    //console.log(value);
-    //console.log(res);
-    // if(err){
-    //console.log(err);
-    // }
+    if(err) {
+      throw err;
+    }
     cb(res.rows);
   });
 };
