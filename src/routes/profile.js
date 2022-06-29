@@ -3,9 +3,9 @@ const profile = require('express').Router();
 
 const profielController = require('../controllers/profile');
 
-profile.get('/', profielController.getAllProfile);
-profile.post('/', profielController.postProfile);
-profile.delete('/', profielController.deleteProfile);
+profile.get('/:id', profielController.detailProfile);
+// profile.post('/', profielController.postProfile);
+// profile.delete('/', profielController.deleteProfile);
 
 
 

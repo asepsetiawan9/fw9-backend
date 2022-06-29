@@ -1,6 +1,6 @@
 const response = require('../helpers/standardResponse');
 const userModel = require('../models/users');
-//const users = require('../routes/users');
+
 
 exports.getAllUsers = (req, res)=>{
   userModel.getAllUsers((results)=>{
@@ -8,12 +8,31 @@ exports.getAllUsers = (req, res)=>{
   });
 };
 
-exports.postUsers = (req, res)=>{
-  return response(res, 'Post Users success');
+exports.createUser = (req, res)=>{
+  userModel.createUser(req.body, (results)=>{
+    return response(res, 'Post Users success', results);
+  });
 };
 
-exports.deleteUsers = (req, res)=>{
-  return response(res, 'Delete Users success');
+exports.editUser = (req, res)=>{
+  const {id} =req.params;
+  userModel.updateUser(id, req.body, (results)=>{
+    return response(res, 'update data success', results[0]);
+  });
+};
+
+exports.deleteUser = (req, res)=>{
+  const {id} =req.params;
+  userModel.deleteUser(id, (results)=>{
+    return response(res, 'Delete Users success', results[0]);
+  });
+};
+
+exports.detailUser = (req, res)=>{
+  const {id} =req.params;
+  userModel.detailUser(id, (results)=>{
+    return response(res, 'This Users Details', results);
+  });
 };
 
 
