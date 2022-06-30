@@ -1,5 +1,8 @@
 const response = require('../helpers/standardResponse');
 const userModel = require('../models/users');
+const { validationResult } = require('express-validator');
+const errResponse = require('../helpers/errResponse');
+
 
 
 exports.getAllUsers = (req, res)=>{
@@ -9,8 +12,24 @@ exports.getAllUsers = (req, res)=>{
 };
 
 exports.createUser = (req, res)=>{
-  userModel.createUser(req.body, (results)=>{
-    return response(res, 'Post Users success', results);
+
+  const valdation = validationResult(req);
+  if(!valdation.isEmpty()){
+    return response(res, 'Error occurd', valdation.array(), 400);
+  }
+  userModel.createUser(req.body, (err, results)=>{
+    if(err){
+      if(err.code === '23505' && err.detail.includes('email')){
+        const errres = errResponse('Email alredy exsist', 'email');
+        return response(res, 'Error', errres, 400);
+      }else if(err.code === '23505' && err.detail.includes('username')){
+        const errres = errResponse('Username is already exsist', 'username');
+        return response(res, 'Error', errres, 400);
+      }
+      return response(res, 'Error', null, 400);
+    }else{
+      return response(res, 'Post Users success', results);
+    }
   });
 };
 
