@@ -1,13 +1,10 @@
 require('dotenv').config();
 
-//require('dotenv').config();
 const express =  require('express');
 
 const app = express();
 
 app.use(express.urlencoded({extended: false}));
-//app.use(express.json());
-
 
 app.get('/', (req, res)=>{
   return res.json({
@@ -15,7 +12,6 @@ app.get('/', (req, res)=>{
     message: 'Backend is running well'
   });
 });
-//const portServer = process.env.PORT;
 
 app.use('/', require('./src/routes'));
 
