@@ -26,7 +26,8 @@ exports.createTrans = (data, cb)=>{
   db.query(quer, value, (err, res)=>{
     console.log(value);
     if(err) {
-      throw err;
+      //throw err;
+      console.log(err);
     }
     cb(res.rows);
   });

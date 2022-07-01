@@ -13,8 +13,10 @@ exports.createUser = (data, cb)=>{
   const quer = 'INSERT INTO users(username, email, password, pin) VALUES ($1, $2, $3, $4) RETURNING *';
   const value = [data.username, data.email, data.password, data.pin];
   db.query(quer, value, (err, res)=>{
-    if(err) {
-      throw err;
+    if(res) {
+      cb(err, res.rows);
+    }else{
+      cb(err);
     }
     cb(res.rows);
   });
@@ -24,9 +26,10 @@ exports.updateUser = (id, data, cb)=>{
   const quer = 'UPDATE users SET username=$1, email=$2, password=$3, pin=$4 WHERE id=$5 RETURNING *';
   const value = [data.username, data.email, data.password, data.pin, id];
   db.query(quer, value, (err, res)=>{
-    console.log(res);
-    if(err) {
-      throw err;
+    if(res) {
+      cb(err, res.rows);
+    }else{
+      cb(err);
     }
     cb(res.rows);
   }) ;

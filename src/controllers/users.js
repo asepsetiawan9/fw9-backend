@@ -18,25 +18,27 @@ exports.createUser = (req, res)=>{
     return response(res, 'Error occurd', valdation.array(), 400);
   }
   userModel.createUser(req.body, (err, results)=>{
-    if(err){
-      if(err.code === '23505' && err.detail.includes('email')){
-        const errres = errResponse('Email alredy exsist', 'email');
-        return response(res, 'Error', errres, 400);
-      }else if(err.code === '23505' && err.detail.includes('username')){
-        const errres = errResponse('Username is already exsist', 'username');
-        return response(res, 'Error', errres, 400);
-      }
-      return response(res, 'Error', null, 400);
+    if (err) {
+      return errResponse(err, res);
     }else{
-      return response(res, 'Post Users success', results);
+      return response(res, 'Create user successfully', results[0]);
     }
   });
 };
 
 exports.editUser = (req, res)=>{
-  const {id} =req.params;
-  userModel.updateUser(id, req.body, (results)=>{
-    return response(res, 'update data success', results[0]);
+  const {id} = req.params;
+  const valdation = validationResult(req);
+  if(!valdation.isEmpty()){
+    return response(res, 'Error occurd', valdation.array(), 400);
+  }
+  userModel.updateUser(id, req.body, (err, results)=>{
+    console.log(err);
+    if (err) {
+      return errResponse(err, res);
+    } else {
+      return response(res, 'Edit user successfully', results[0]);
+    }
   });
 };
 
