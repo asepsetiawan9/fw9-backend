@@ -1,11 +1,19 @@
 const db = require('../helpers/db.js');
+const {DATA_LIMIT} = process.env;
 
-exports.getAllUsers = (cb) => {
-  db.query('SELECT * FROM users ORDER BY id ASC', (err, res) => {
+
+exports.getAllUsers = (keyword, limit=Number(DATA_LIMIT), offset=0, cb) => {
+  db.query(`SELECT * FROM users WHERE email LIKE \'${keyword}%\' ORDER BY id ASC LIMIT $1 OFFSET $2`, [limit, offset], (err, res) => {
     if(err) {
       throw err;
     }
-    cb(res.rows);
+    cb(err, res.rows);
+  });
+};
+
+exports.countAllUsers = (keyword, cb)=> {
+  db.query(`SELECT * FROM users WHERE email LIKE \'%${keyword}%\' `, (err, res)=>{
+    cb(err, res.rowCount);
   });
 };
 

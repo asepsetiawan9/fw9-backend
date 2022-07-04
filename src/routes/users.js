@@ -25,7 +25,7 @@ const userValidator = [
 ];
 
 
-users.get('/', userController.getAllUsers);
+users.get('/', body('limit').toInt(), body('page').toInt(),userController.getAllUsers);
 users.post('/', ...userValidator, userController.createUser);
 users.patch('/:id', ...userValidator, userController.editUser);
 users.delete('/:id', userController.deleteUser);
