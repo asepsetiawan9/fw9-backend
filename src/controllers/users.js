@@ -6,18 +6,18 @@ const errResponse = require('../helpers/errResponse');
 
 const {DATA_LIMIT} = process.env;
 exports.getAllUsers = (req, res)=>{
-  const {s ='', limit=parseInt(DATA_LIMIT), page=1} = req.query;
-
+  const {searchBy='username', search ='', limit=parseInt(DATA_LIMIT), page=1} = req.query;
+  // console.log(search);
   const offset = (page-1) * limit;
   
-  userModel.getAllUsers(s, limit, offset, (err, results)=>{
+  userModel.getAllUsers(searchBy, search, limit, offset, (err, results)=>{
     //console.log(err);
     if(results.length < 1){
       return res.redirect('/404');
     }else{
       
       const infoPage = {};
-      userModel.countAllUsers(s, (err, totalData) =>{
+      userModel.countAllUsers(searchBy, search, (err, totalData) =>{
         infoPage.totalData = totalData;
         infoPage.totalPage = Math.ceil(totalData/limit);
         infoPage.currPage = parseInt(page);
@@ -32,12 +32,12 @@ exports.getAllUsers = (req, res)=>{
 };
 
 exports.createUser = (req, res)=>{
-
   const valdation = validationResult(req);
   if(!valdation.isEmpty()){
     return response(res, 'Error occurd', valdation.array(), null, 400);
   }
   userModel.createUser(req.body, (err, results)=>{
+    console.log(err);
     if (err) {
       return errResponse(err, res);
     }else{
@@ -53,12 +53,17 @@ exports.editUser = (req, res)=>{
     return response(res, 'Error occurd', valdation.array(), 400);
   }
   userModel.updateUser(id, req.body, (err, results)=>{
-    console.log(err);
-    if (err) {
-      return errResponse(err, res);
-    } else {
-      return response(res, 'Edit user successfully', results[0]);
+    if(results.length > 0 ){
+      if (err) {
+        return errResponse(err, res);
+      } else {
+        return response(res, 'Edit user successfully', results[0]);
+      }
+    }else{
+      return res.redirect('/404');
     }
+    
+   
   });
 };
 

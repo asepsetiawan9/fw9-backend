@@ -8,7 +8,3 @@ exports.postLogin = (req, res)=>{
   }
 };
 
-// exports.postRegister = (req, res)=>{
-//     return response(res, 'Register success')
-// }
-

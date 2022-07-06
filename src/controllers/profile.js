@@ -1,6 +1,44 @@
 const response = require('../helpers/standardResponse');
 const profileModel = require('../models/profile');
+const upload = require('../helpers/upload').single('picture');
 
+
+exports.uploadProfile = (req, res) => {
+  upload(req, res, (err)=>{
+    if(err){
+      return response(res, `Upload Failed : ${err.message}`, null, null, 400);
+    }
+    return response(res, 'Image has been uploaded', req.body);
+  });
+  
+};
+
+
+exports.createProfile = (req, res) => {
+  upload(req, res, (err)=>{
+    if(err){
+      return response(res, `Upload Failed : ${err.message}`, null, null, 400);
+    }
+    profileModel.createProfile(req.file.filename, req.body, (results)=>{
+      console.log(req.body);
+      return response(res, 'Post Profile success', results);
+    });
+  });
+  
+};
+
+exports.updateProfile = (req, res) => {
+  upload(req, res, (err)=>{
+    if(err){
+      return response(res, `Upload Failed : ${err.message}`, null, null, 400);
+    }
+    const {id} =req.params;
+    profileModel.updateProfile(id, req.file.filename, req.body, (results)=>{
+      return response(res, 'update data success', results[0]);
+    });
+  });
+  
+};
 
 exports.detailProfile = (req, res)=>{
   const {id} =req.params;
@@ -9,18 +47,6 @@ exports.detailProfile = (req, res)=>{
   });
 };
 
-exports.createProfile = (req, res)=>{
-  profileModel.createProfile(req.body, (results)=>{
-    return response(res, 'Post Profile success', results);
-  });
-};
-
-exports.updateProfile = (req, res)=>{
-  const {id} =req.params;
-  profileModel.updateProfile(id, req.body, (results)=>{
-    return response(res, 'update data success', results[0]);
-  });
-};
 
 exports.deleteProfile = (req, res)=>{
   const {id} =req.params;

@@ -2,18 +2,25 @@ const db = require('../helpers/db.js');
 const {DATA_LIMIT} = process.env;
 
 
-exports.getAllUsers = (keyword, limit=Number(DATA_LIMIT), offset=0, cb) => {
-  db.query(`SELECT * FROM users WHERE email LIKE \'${keyword}%\' ORDER BY id ASC LIMIT $1 OFFSET $2`, [limit, offset], (err, res) => {
+exports.getAllUsers = (searchBy, keyword, limit=Number(DATA_LIMIT), offset=0, cb) => {
+  console.log(keyword);
+  console.log(searchBy);
+  db.query(`SELECT * FROM users WHERE ${searchBy} LIKE '${keyword}%' ORDER BY id ASC LIMIT $1 OFFSET $2`, [limit, offset], (err, res) => {
+    console.log(res);
     if(err) {
-      throw err;
+      console.log(err);
     }
     cb(err, res.rows);
   });
 };
 
-exports.countAllUsers = (keyword, cb)=> {
-  db.query(`SELECT * FROM users WHERE email LIKE \'%${keyword}%\' `, (err, res)=>{
+exports.countAllUsers = (searchBy, keyword, cb)=> {
+  db.query(`SELECT * FROM users WHERE ${searchBy} LIKE '%${keyword}%' `, (err, res)=>{
+    if(err){
+      console.log(err);
+    }
     cb(err, res.rowCount);
+    
   });
 };
 
@@ -21,12 +28,12 @@ exports.createUser = (data, cb)=>{
   const quer = 'INSERT INTO users(username, email, password, pin) VALUES ($1, $2, $3, $4) RETURNING *';
   const value = [data.username, data.email, data.password, data.pin];
   db.query(quer, value, (err, res)=>{
-    if(res) {
+    console.log(res);
+    if (res) {
       cb(err, res.rows);
     }else{
       cb(err);
     }
-    cb(res.rows);
   });
 };
 
@@ -39,7 +46,6 @@ exports.updateUser = (id, data, cb)=>{
     }else{
       cb(err);
     }
-    cb(res.rows);
   }) ;
 };
 

@@ -10,9 +10,10 @@ const userValidator = [
     .isEmail().withMessage('Wrong Email Format'),
   body('username')
     .exists({checkFalsy: true}).withMessage('Enter an Username')
-    .isLength({min: 4}).withMessage('Username must be more than 4 characters'),
+    .isLength({min: 6}).withMessage('Username must be more than 6 characters'),
   body('password')
     .exists({checkFalsy: true}).withMessage('Enter a Password')
+    .isLength({min: 6}).withMessage('Password must be more than 6 characters')
     .customSanitizer(async val =>{
       const hash = await bcrypt.hash(val, 10);
       return hash;

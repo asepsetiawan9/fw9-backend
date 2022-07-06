@@ -3,8 +3,9 @@ require('dotenv').config();
 const express =  require('express');
 
 const app = express();
-
+app.use('/image',express.static('assets'));
 app.use(express.urlencoded({extended: false}));
+global.__basepath = __dirname;
 
 app.get('/', (req, res)=>{
   return res.json({
