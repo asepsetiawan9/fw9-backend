@@ -6,11 +6,11 @@ const errResponse = require('../helpers/errResponse');
 
 const {DATA_LIMIT} = process.env;
 exports.getAllUsers = (req, res)=>{
-  const {searchBy='username', search ='', limit=parseInt(DATA_LIMIT), page=1} = req.query;
+  const {searchBy='username', search ='', limit=parseInt(DATA_LIMIT), page=1, orderBy ='id', sortType='ASC' } = req.query;
   // console.log(search);
   const offset = (page-1) * limit;
   
-  userModel.getAllUsers(searchBy, search, limit, offset, (err, results)=>{
+  userModel.getAllUsers(searchBy, search, limit, offset, orderBy, sortType, (err, results)=>{
     //console.log(err);
     if(results.length < 1){
       return res.redirect('/404');

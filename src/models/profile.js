@@ -12,11 +12,10 @@ exports.detailProfile = (id, cb) => {
 };
 
 exports.createProfile = (picture, data, cb)=>{
-  const quer = 'INSERT INTO profile(fullname, picture, phone, id_user, balance, income, expanse) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
-  const value = [data.fullname, picture, data.phone, data.id_user, data.balance, data.income, data.expanse];
+  const quer = 'INSERT INTO profile(fullname, picture, phone, id_user, balance, income, expand) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+  const value = [data.fullname, picture, data.phone, data.id_user, data.balance, data.income, data.expand];
  
   db.query(quer, value, (err, res)=>{
-    console.log(res);
     if(err) {
       throw err;
     }
@@ -25,16 +24,15 @@ exports.createProfile = (picture, data, cb)=>{
 };
 
 exports.updateProfile = (id, picture, data, cb)=>{
-  console.log(id);
+
   console.log(picture);
-  console.log(data);
-  const quer = 'UPDATE profile SET fullname=$1, picture=$2, phone=$3, id_user=$4, balance=$5, income=$6, expanse=$7 WHERE id=$8 RETURNING *';
-  const value = [data.fullname, picture, data.phone, data.id_user, data.balance, data.income, data.expanse, id];
+  const quer = 'UPDATE profile SET fullname=$1, picture=$2, phone=$3, id_user=$4, balance=$5, income=$6, expand=$7 WHERE id=$8 RETURNING *';
+  const value = [data.fullname, picture, data.phone, data.id_user, data.balance, data.income, data.expand, id];
   db.query(quer, value, (err, res)=>{
     if(err) {
       throw err;
     }
-    cb(res.rows);
+    cb(err, res.rows);
   }) ;
 };
 
@@ -45,7 +43,7 @@ exports.deleteProfile = (id, cb) => {
     if(err) {
       throw err;
     }
-    cb(res.rows);
+    cb(err, res.rows);
   });
 };
 
@@ -54,7 +52,7 @@ exports.getAllProfile = (cb) => {
     if(err) {
       throw err;
     }
-    cb(res.rows);
+    cb(err, res.rows);
   });
 };
 

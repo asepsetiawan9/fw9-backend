@@ -3,6 +3,7 @@ const profileModel = require('../models/profile');
 const upload = require('../helpers/upload').single('picture');
 
 
+
 exports.uploadProfile = (req, res) => {
   upload(req, res, (err)=>{
     if(err){
@@ -19,25 +20,29 @@ exports.createProfile = (req, res) => {
     if(err){
       return response(res, `Upload Failed : ${err.message}`, null, null, 400);
     }
-    profileModel.createProfile(req.file.filename, req.body, (results)=>{
-      console.log(req.body);
-      return response(res, 'Post Profile success', results);
+    profileModel.createProfile(req.file.filename, req.body, (err, results)=>{
+      console.log(results);
+      return response(res, 'Post Profile success', results[0]);
     });
   });
   
 };
 
 exports.updateProfile = (req, res) => {
-  upload(req, res, (err)=>{
+  const {id} =req.params;
+  let filename = null;
+
+  if(req.file){
+    filename = req.file.filename;
+  }
+  console.log(filename);
+  profileModel.updateProfile(id, filename, req.body, (err, results)=>{
+    //console.log(req.file.filename);
     if(err){
-      return response(res, `Upload Failed : ${err.message}`, null, null, 400);
+      return response(res, `Failed to update: ${err.message}`, null, null, 400);
     }
-    const {id} =req.params;
-    profileModel.updateProfile(id, req.file.filename, req.body, (results)=>{
-      return response(res, 'update data success', results[0]);
-    });
+    return response(res, 'update data success', results[0]);
   });
-  
 };
 
 exports.detailProfile = (req, res)=>{
