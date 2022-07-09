@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.3
--- Dumped by pg_dump version 14.3
+-- Dumped from database version 14.4
+-- Dumped by pg_dump version 14.4
 
--- Started on 2022-07-06 16:22:33
+-- Started on 2022-07-09 11:39:17
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -18,18 +18,17 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-DROP DATABASE zwallet;
 --
--- TOC entry 3348 (class 1262 OID 24586)
--- Name: zwalet; Type: DATABASE; Schema: -; Owner: postgres
+-- TOC entry 3348 (class 1262 OID 16723)
+-- Name: zwallet; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE zwalet WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'English_United States.1252';
+CREATE DATABASE zwallet WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'English_United States.1252';
 
 
-ALTER DATABASE zwalet OWNER TO postgres;
+ALTER DATABASE zwallet OWNER TO postgres;
 
-\connect zwalet
+\connect zwallet
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -66,7 +65,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 214 (class 1259 OID 24665)
+-- TOC entry 209 (class 1259 OID 16787)
 -- Name: profile; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -77,14 +76,15 @@ CREATE TABLE public.profile (
     phone character varying(20),
     id_user integer,
     expand bigint,
-    income bigint
+    income bigint,
+    balance bigint
 );
 
 
 ALTER TABLE public.profile OWNER TO postgres;
 
 --
--- TOC entry 213 (class 1259 OID 24664)
+-- TOC entry 210 (class 1259 OID 16792)
 -- Name: profile_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -99,7 +99,7 @@ ALTER TABLE public.profile ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 212 (class 1259 OID 24657)
+-- TOC entry 211 (class 1259 OID 16793)
 -- Name: transaction; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -119,7 +119,7 @@ CREATE TABLE public.transaction (
 ALTER TABLE public.transaction OWNER TO postgres;
 
 --
--- TOC entry 216 (class 1259 OID 32779)
+-- TOC entry 212 (class 1259 OID 16798)
 -- Name: transaction_type; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -133,7 +133,7 @@ CREATE TABLE public.transaction_type (
 ALTER TABLE public.transaction_type OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 32778)
+-- TOC entry 213 (class 1259 OID 16803)
 -- Name: transaction_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -148,7 +148,7 @@ ALTER TABLE public.transaction_type ALTER COLUMN id ADD GENERATED ALWAYS AS IDEN
 
 
 --
--- TOC entry 211 (class 1259 OID 24656)
+-- TOC entry 214 (class 1259 OID 16804)
 -- Name: transactions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -163,7 +163,7 @@ ALTER TABLE public.transaction ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY 
 
 
 --
--- TOC entry 210 (class 1259 OID 24649)
+-- TOC entry 215 (class 1259 OID 16805)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -179,7 +179,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 24648)
+-- TOC entry 216 (class 1259 OID 16810)
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -194,18 +194,20 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 3340 (class 0 OID 24665)
--- Dependencies: 214
+-- TOC entry 3335 (class 0 OID 16787)
+-- Dependencies: 209
 -- Data for Name: profile; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.profile (id, fullname, picture, phone, id_user, expand, income) FROM stdin;
+COPY public.profile (id, fullname, picture, phone, id_user, expand, income, balance) FROM stdin;
+2	jhone doe	\N	08221611573	95	\N	\N	12
+1	baruuuu	1657339182223_ZWALET.png	08222155411	\N	\N	\N	111
 \.
 
 
 --
--- TOC entry 3338 (class 0 OID 24657)
--- Dependencies: 212
+-- TOC entry 3337 (class 0 OID 16793)
+-- Dependencies: 211
 -- Data for Name: transaction; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -214,8 +216,8 @@ COPY public.transaction (id, amount, time_date, note, recipient_id, sender_id, t
 
 
 --
--- TOC entry 3342 (class 0 OID 32779)
--- Dependencies: 216
+-- TOC entry 3338 (class 0 OID 16798)
+-- Dependencies: 212
 -- Data for Name: transaction_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -224,27 +226,29 @@ COPY public.transaction_type (id, name, description) FROM stdin;
 
 
 --
--- TOC entry 3336 (class 0 OID 24649)
--- Dependencies: 210
+-- TOC entry 3341 (class 0 OID 16805)
+-- Dependencies: 215
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.users (id, username, email, password, pin) FROM stdin;
+95	userr2	email2@email.com	$2b$10$Wq3XQD7z.r0jBwDckoOkyOub1zymGqUKypNaGByfmjl3ZmfJxbOCi	123456
+96	userr1	email1@email.com	$2b$10$YWTXvsPOWmCUa0wnmbO6mODEgaGFcEd9AiWj3yOf4RslHgbrFWud6	123456
 \.
 
 
 --
 -- TOC entry 3350 (class 0 OID 0)
--- Dependencies: 213
+-- Dependencies: 210
 -- Name: profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.profile_id_seq', 12, true);
+SELECT pg_catalog.setval('public.profile_id_seq', 2, true);
 
 
 --
 -- TOC entry 3351 (class 0 OID 0)
--- Dependencies: 215
+-- Dependencies: 213
 -- Name: transaction_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -253,7 +257,7 @@ SELECT pg_catalog.setval('public.transaction_type_id_seq', 2, true);
 
 --
 -- TOC entry 3352 (class 0 OID 0)
--- Dependencies: 211
+-- Dependencies: 214
 -- Name: transactions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -262,15 +266,15 @@ SELECT pg_catalog.setval('public.transactions_id_seq', 9, true);
 
 --
 -- TOC entry 3353 (class 0 OID 0)
--- Dependencies: 209
+-- Dependencies: 216
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 94, true);
+SELECT pg_catalog.setval('public.users_id_seq', 97, true);
 
 
 --
--- TOC entry 3180 (class 2606 OID 32898)
+-- TOC entry 3186 (class 2606 OID 16812)
 -- Name: users email_un; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -279,7 +283,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3188 (class 2606 OID 24671)
+-- TOC entry 3180 (class 2606 OID 16814)
 -- Name: profile profile_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -288,7 +292,7 @@ ALTER TABLE ONLY public.profile
 
 
 --
--- TOC entry 3190 (class 2606 OID 32785)
+-- TOC entry 3184 (class 2606 OID 16816)
 -- Name: transaction_type transaction_type_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -297,7 +301,7 @@ ALTER TABLE ONLY public.transaction_type
 
 
 --
--- TOC entry 3186 (class 2606 OID 24663)
+-- TOC entry 3182 (class 2606 OID 16818)
 -- Name: transaction transactions_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -306,7 +310,7 @@ ALTER TABLE ONLY public.transaction
 
 
 --
--- TOC entry 3182 (class 2606 OID 32896)
+-- TOC entry 3188 (class 2606 OID 16820)
 -- Name: users username_un; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -315,7 +319,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3184 (class 2606 OID 24655)
+-- TOC entry 3190 (class 2606 OID 16822)
 -- Name: users users_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -324,51 +328,51 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3195 (class 2606 OID 32835)
+-- TOC entry 3194 (class 2606 OID 16873)
+-- Name: transaction profie_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transaction
+    ADD CONSTRAINT profie_fk FOREIGN KEY (profile_id) REFERENCES public.profile(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- TOC entry 3191 (class 2606 OID 16848)
 -- Name: profile profile_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.profile
-    ADD CONSTRAINT profile_fk FOREIGN KEY (id_user) REFERENCES public.users(id);
+    ADD CONSTRAINT profile_fk FOREIGN KEY (id_user) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
--- TOC entry 3191 (class 2606 OID 41101)
--- Name: transaction transaction_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.transaction
-    ADD CONSTRAINT transaction_fk_1 FOREIGN KEY (recipient_id) REFERENCES public.users(id);
-
-
---
--- TOC entry 3192 (class 2606 OID 41106)
--- Name: transaction transaction_fk_2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3193 (class 2606 OID 16868)
+-- Name: transaction recipient_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.transaction
-    ADD CONSTRAINT transaction_fk_2 FOREIGN KEY (sender_id) REFERENCES public.users(id);
+    ADD CONSTRAINT recipient_fk_1 FOREIGN KEY (recipient_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
--- TOC entry 3193 (class 2606 OID 41111)
--- Name: transaction transaction_fk_3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.transaction
-    ADD CONSTRAINT transaction_fk_3 FOREIGN KEY (typetrans_id) REFERENCES public.transaction_type(id);
-
-
---
--- TOC entry 3194 (class 2606 OID 41116)
--- Name: transaction transaction_fk_4; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3192 (class 2606 OID 16863)
+-- Name: transaction sender_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.transaction
-    ADD CONSTRAINT transaction_fk_4 FOREIGN KEY (profile_id) REFERENCES public.profile(id);
+    ADD CONSTRAINT sender_fk FOREIGN KEY (recipient_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
--- Completed on 2022-07-06 16:22:34
+--
+-- TOC entry 3195 (class 2606 OID 16878)
+-- Name: transaction transaction_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transaction
+    ADD CONSTRAINT transaction_fk FOREIGN KEY (id) REFERENCES public.transaction_type(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+-- Completed on 2022-07-09 11:39:17
 
 --
 -- PostgreSQL database dump complete

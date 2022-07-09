@@ -10,7 +10,7 @@ exports.getAllTrans = (cb) => {
 };
 
 exports.detailTrans = (id, cb) => {
-  const quer = 'SELECT amount, time_date, note, id_user, id_profile, typetrans_id expanse FROM transaction WHERE id=$1';
+  const quer = 'SELECT amount, time_date, note, recipient_id, sender_id, id_profile, typetrans_id FROM transaction WHERE id=$1';
   const value = [id];
   db.query(quer, value, (err, res)=>{
     if(err) {
@@ -21,15 +21,15 @@ exports.detailTrans = (id, cb) => {
 };
 
 exports.createTrans = (data, cb)=>{
-  const quer = 'INSERT INTO transaction(amount, time_date, note, id_user, id_profile, typetrans_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
-  const value = [data.amount, data.time_date, data.note, data.id_user, data.id_profile, data.typetrans_id];
+  const quer = 'INSERT INTO transaction(amount, time_date, note, recipient_id, sender_id, profile_id, typetrans_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+  const value = [data.amount, data.time_date, data.note, data.recipient_id, data.sender_id, data.profile_id, data.typetrans_id];
   db.query(quer, value, (err, res)=>{
-    console.log(value);
+    //console.log(value);
     if(err) {
       //throw err;
       console.log(err);
     }
-    cb(res.rows);
+    cb(err, res.rows);
   });
 };
 

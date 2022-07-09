@@ -1,9 +1,9 @@
-const db = require('../helpers/db.js');
+const db = require('../helpers/db');
 const {DATA_LIMIT} = process.env;
 
 
 exports.getAllUsers = (searchBy, keyword, limit=Number(DATA_LIMIT), offset=0, orderBy, sortType, cb) => {
-  db.query(`SELECT * FROM users WHERE ${searchBy} LIKE '${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`, [limit, offset], (err, res) => {
+  db.query(`SELECT * FROM users WHERE ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`, [limit, offset], (err, res) => {
     console.log(res);
     if(err) {
       console.log(err);
@@ -11,7 +11,7 @@ exports.getAllUsers = (searchBy, keyword, limit=Number(DATA_LIMIT), offset=0, or
     cb(err, res.rows);
   });
 };
-
+ 
 exports.countAllUsers = (searchBy, keyword, cb)=> {
   db.query(`SELECT * FROM users WHERE ${searchBy} LIKE '%${keyword}%' `, (err, res)=>{
     if(err){

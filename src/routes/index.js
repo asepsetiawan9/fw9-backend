@@ -1,9 +1,11 @@
 const router = require('express').Router(); //entri point dari page exprees
 
-router.use('/users', require('./users')); // memanggil router users
-router.use('/profile', require('./profile')); // memanggil router users
-router.use('/login', require('./login')); // memanggil router login
-router.use('/transactions', require('./transactions')); // memanggil router transactions
-router.use('/typetransaction', require('./typeTrans')); // memanggil router typetransactions
+router.use('/admin/users', require('./admin/users')); // memanggil router users
+router.use('/admin/profile', require('./admin/profile')); // memanggil router users
+router.use('/auth', require('./auth')); // memanggil router login
+router.use('/admin/transactions', require('./admin/transactions')); // memanggil router transactions
+router.use('/admin/typetransaction', require('./admin/typeTrans'));
+
+router.use('/profileUser', require('./users/profile'));// memanggil router typetransactions
 
 module.exports = router; //akan di gunakan di root folder

@@ -1,7 +1,7 @@
 const db = require('../helpers/db.js');
 
 exports.detailProfile = (id, cb) => {
-  const quer = 'SELECT fullname, picture, phone, id_user, balance, income, expanse FROM profile WHERE id=$1';
+  const quer = 'SELECT fullname, picture, phone, id_user, balance, income, expand FROM profile WHERE id=$1';
   const value = [id];
   db.query(quer, value, (err, res)=>{
     if(err) {
@@ -14,7 +14,7 @@ exports.detailProfile = (id, cb) => {
 exports.createProfile = (picture, data, cb)=>{
   const quer = 'INSERT INTO profile(fullname, picture, phone, id_user, balance, income, expand) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
   const value = [data.fullname, picture, data.phone, data.id_user, data.balance, data.income, data.expand];
- 
+
   db.query(quer, value, (err, res)=>{
     if(err) {
       throw err;
@@ -24,10 +24,28 @@ exports.createProfile = (picture, data, cb)=>{
 };
 
 exports.updateProfile = (id, picture, data, cb)=>{
+  let value = [id];
 
-  console.log(picture);
-  const quer = 'UPDATE profile SET fullname=$1, picture=$2, phone=$3, id_user=$4, balance=$5, income=$6, expand=$7 WHERE id=$8 RETURNING *';
-  const value = [data.fullname, picture, data.phone, data.id_user, data.balance, data.income, data.expand, id];
+  const filter = {};
+  const obj = {
+    picture,
+    fullname: data.fullname,
+    balance: data.balance,
+    phone: data.phone,
+    income: data.income,
+    expand: data.expand,
+  };
+  for(let x in obj){
+    if(obj[x]!==null){
+      filter[x] = obj[x];
+      value.push(obj[x]);
+    }
+  }
+
+  const key = Object.keys(filter);
+  const finalRes = key.map((o, ind) => `${o}=$${ind+2}`);
+  //console.log(finalRes);
+  const quer = `UPDATE profile SET ${finalRes} WHERE id=$1 RETURNING *`;
   db.query(quer, value, (err, res)=>{
     if(err) {
       throw err;
