@@ -11,6 +11,7 @@ const auth = (req, res, next)=> {
       try{
         const results = jwt.verify(token, process.env.APP_SECRET || 'D3f4uLt');
         req.authUser = results;
+        //console.log(results);
         next();
       }catch(e){
         return response(res, 'Token Expired', null, null, 401);

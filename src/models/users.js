@@ -3,17 +3,19 @@ const {DATA_LIMIT} = process.env;
 
 
 exports.getAllUsers = (searchBy, keyword, limit=Number(DATA_LIMIT), offset=0, orderBy, sortType, cb) => {
-  db.query(`SELECT * FROM users WHERE ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`, [limit, offset], (err, res) => {
-    console.log(res);
-    if(err) {
-      console.log(err);
-    }
-    cb(err, res.rows);
-  });
+  db.query(`SELECT * FROM users WHERE ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`,
+    [limit, offset], (err, res) => {
+      console.log(res);
+      if(err) {
+        console.log(err);
+      }
+      cb(err, res.rows);
+    });
 };
  
 exports.countAllUsers = (searchBy, keyword, cb)=> {
   db.query(`SELECT * FROM users WHERE ${searchBy} LIKE '%${keyword}%' `, (err, res)=>{
+    console.log(res);
     if(err){
       console.log(err);
     }

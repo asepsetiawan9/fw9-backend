@@ -15,7 +15,14 @@ exports.detailTrans = (req, res)=>{
 };
 
 exports.createTrans = (req, res)=>{
-  transModel.createTrans(req.body, (err, results)=>{
+  const newDate = new Date();
+  req.body.time_date = new Date(newDate.toLocaleString('en-US', {timeZone: 'Asia/Jakarta'}));
+  const dateNow = req.body.time_date.toLocaleDateString();
+  const timeNow = req.body.time_date.toLocaleTimeString();
+  
+  const sendDate = dateNow +' '+ timeNow;
+  //console.log(sendDate) ;
+  transModel.createTrans(sendDate, req.body, (err, results)=>{
     return response(res, 'Post Transaction success', results);
   });
 };

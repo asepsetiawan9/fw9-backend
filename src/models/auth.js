@@ -26,9 +26,6 @@ exports.updatePin = (id, data, cb)=>{
 
   const filter = {};
   const obj = {
-    username: data.username,
-    password: data.password,
-    email: data.email,
     pin: data.pin
   };
 

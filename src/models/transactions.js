@@ -20,9 +20,9 @@ exports.detailTrans = (id, cb) => {
   });
 };
 
-exports.createTrans = (data, cb)=>{
+exports.createTrans = (dateNow, data, cb)=>{
   const quer = 'INSERT INTO transaction(amount, time_date, note, recipient_id, sender_id, profile_id, typetrans_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
-  const value = [data.amount, data.time_date, data.note, data.recipient_id, data.sender_id, data.profile_id, data.typetrans_id];
+  const value = [data.amount, dateNow, data.note, data.recipient_id, data.sender_id, data.profile_id, data.typetrans_id];
   db.query(quer, value, (err, res)=>{
     //console.log(value);
     if(err) {

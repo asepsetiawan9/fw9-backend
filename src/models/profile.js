@@ -37,8 +37,10 @@ exports.updateProfile = (id, picture, data, cb)=>{
   };
   for(let x in obj){
     if(obj[x]!==null){
-      filter[x] = obj[x];
-      value.push(obj[x]);
+      if(obj[x]!==undefined){
+        filter[x] = obj[x];
+        value.push(obj[x]);
+      }
     }
   }
 
