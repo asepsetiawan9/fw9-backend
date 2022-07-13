@@ -4,7 +4,6 @@ exports.register = (data, cb)=>{
   const quer = 'INSERT INTO users(username, email, password, pin) VALUES ($1, $2, $3, $4) RETURNING *';
   const value = [data.username, data.email, data.password, data.pin];
   db.query(quer, value, (err, res)=>{
-    //cb(err, res);
     if (res) {
       cb(err, res.rows);
     }else{
@@ -46,4 +45,17 @@ exports.updatePin = (id, data, cb)=>{
   db.query(quer, value, (err, res)=>{
     cb(err, res);
   }) ;
+};
+
+exports.createProfile = (id_user, cb)=>{
+  console.log(id_user);
+  const quer = 'INSERT INTO profile(id_user) VALUES ($1) RETURNING *';
+  const value = [id_user];
+  db.query(quer, value, (err, res)=>{
+    if (res) {
+      cb(err, res.rows);
+    }else{
+      cb(err);
+    }
+  });
 };

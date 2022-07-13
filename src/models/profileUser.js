@@ -10,11 +10,11 @@ exports.userById = (id, cb) => {
 };
 
 exports.detailProfile = (id_user, cb) => {
-  //console.log(id_user);
+  console.log(id_user);
   const quer = 'SELECT * FROM profile WHERE id_user=$1';
   const value = [id_user];
   db.query(quer, value, (err, res)=>{
-    //console.log(res);
+    console.log(quer);
     cb(err, res.rows);
   });
 };
@@ -41,11 +41,11 @@ exports.countAllTrans = (searchBy, search, sender_id, cb)=> {
 
 
 exports.getProfileById = (id_user, cb) => {
-  console.log(id_user);
+  //console.log(id_user);
   const quer = 'SELECT * FROM profile WHERE id_user=$1';
   const value = [id_user];
   db.query(quer, value, (err, res)=>{
-    cb(err, res);
+    cb(err, res.rows);
   });
 };
 
@@ -82,7 +82,6 @@ exports.updatePhone = (id, data, cb)=>{
 
 exports.updateProfile = (id_user, picture, data, cb)=>{
   let value = [id_user];
-
   const filter = {};
   const obj = {
     picture,
@@ -187,7 +186,6 @@ exports.updatePhone = (id_user, data, cb)=>{
 
   const key = Object.keys(filter);
   const finalRes = key.map((o, ind) => `${o}=$${ind+2}`);
-  //console.log(finalRes);
   const quer = `UPDATE profile SET ${finalRes} WHERE id_user=$1 RETURNING *`;
   db.query(quer, value, (err, res)=>{
     if(err) {

@@ -7,11 +7,16 @@ const {APP_SECRET} = process.env;
 
 exports.register = (req, res)=>{
   req.body.pin = null;
-  authModel.register(req.body, (err) => {
+  authModel.register(req.body, (err, result) => {
     if(err){
       return errResponse(err, res);
     }
-    return response(res, 'Register succesfully');
+    authModel.createProfile(result[0].id, (err)=>{
+      if(err){
+        return errResponse(err, res);
+      }
+    });
+    return response(res, 'Register succesfully', result);
   });
 };
 

@@ -19,13 +19,14 @@ exports.detailProfile = (req, res)=>{
       return res.redirect('/404');
     }else{
       return response(res, 'This Your Profile', results);
+      
     }
 
   });
 };
 
 exports.transhistory = (req, res)=>{
-  console.log(req.headers);
+  //console.log(req.headers);
   const {search ='', searchBy='amount', limit=parseInt(DATA_LIMIT), page=1, orderBy ='id', sortType='ASC'} = req.query;
   const id_user = req.authUser.id;
   const offset = (page-1) * limit;
@@ -52,19 +53,17 @@ exports.transhistory = (req, res)=>{
 exports.createPhone = (req , res) =>{
   const id_user = req.authUser.id;
   profileUserModel.getProfileById(id_user, (err, results)=>{
-    //console.log(results);
-    if(results.rows.length > 0){
-      const user = results.rows[0];
-      //
+    if(results.length > 0){
+      const user = results[0];
       if(user.phone === null){
         profileUserModel.updatePhone(user.id_user, {phone: req.body.phone}, (err, resultUpdate)=>{
-          const userUpdated = resultUpdate.rows[0];
+          const userUpdated = resultUpdate[0];
           if(userUpdated.phone){
-            return response(res, 'Create Phone Succes');
+            return response(res, 'Create Phone Succes', userUpdated.phone);
           }
         });
       }else{
-        return response(res, 'Phone is already set', null, null, 400);
+        return response(res, 'Phone is already set', results[0].phone, null, 400);
       }
     }else{
       return response(res, 'id_user Not Found', null, null, 400);
@@ -93,24 +92,24 @@ exports.updateProfile = (req, res) => {
 exports.updatePassword = (req, res) => {
   const id = req.authUser.id;
   
-  profileUserModel.updatePassword(id, req.body, (err, results)=>{
+  profileUserModel.updatePassword(id, req.body, (err)=>{
 
     if(err){
       return response(res, `Failed to update: ${err.message}`, null, null, 400);
     }
-    return response(res, 'Change Password is Successfully', results[0]);
+    return response(res, 'Change Password is Successfully');
   });
 };
 
 exports.updatePin = (req, res) => {
   const id = req.authUser.id;
   
-  profileUserModel.updatePin(id, req.body, (err, results)=>{
+  profileUserModel.updatePin(id, req.body, (err)=>{
 
     if(err){
       return response(res, `Failed to update: ${err.message}`, null, null, 400);
     }
-    return response(res, 'Change PIN is Successfully', results[0]);
+    return response(res, 'Change PIN is Successfully');
   });
 };
 
