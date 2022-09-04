@@ -1,7 +1,5 @@
 const response = require('../../helpers/standardResponse');
 const profileUserModel = require('../../models/profileUser');
-//const userModel = require('../../models/users');
-const {DATA_LIMIT} = process.env;
 
 exports.welcome = (req, res)=>{
   
@@ -22,31 +20,6 @@ exports.detailProfile = (req, res)=>{
       
     }
 
-  });
-};
-
-exports.transhistory = (req, res)=>{
-  //console.log(req.headers);
-  const {search ='', searchBy='amount', limit=parseInt(DATA_LIMIT), page=1, orderBy ='id', sortType='ASC'} = req.query;
-  const id_user = req.authUser.id;
-  const offset = (page-1) * limit;
-  profileUserModel.transHistory(search, searchBy, limit, offset, orderBy, sortType, id_user, (err, results)=>{
-    if(results.length < 1){
-      return res.redirect('/404');
-    }else{
-      
-      const infoPage = {};
-      profileUserModel.countAllTrans(searchBy, search, id_user,(err, totalData) =>{
-        infoPage.totalData = totalData;
-        infoPage.totalPage = Math.ceil(totalData/limit);
-        infoPage.currPage = parseInt(page);
-        infoPage.nextPage = infoPage.currPage < infoPage.totalPage ? infoPage.currPage + 1 : null;
-        infoPage.prevPage = infoPage.currPage > 1 ? infoPage.currPage -1 : null;
-
-        return response(res, 'This Your Transaction History', results, infoPage);
-      });
-    }
-    
   });
 };
 

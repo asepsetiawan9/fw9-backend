@@ -1,5 +1,5 @@
 const db = require('../helpers/db');
-const {DATA_LIMIT} = process.env;
+
 
 exports.userById = (id, cb) => {
   const quer = 'SELECT * FROM users WHERE id=$1';
@@ -18,27 +18,6 @@ exports.detailProfile = (id_user, cb) => {
     cb(err, res.rows);
   });
 };
-
-exports.transHistory = (search, searchBy, limit=Number(DATA_LIMIT), offset=0, orderBy, sortType, sender_id, cb) => {
-  //console.log(sender_id);
-  const quer = `SELECT * FROM transaction where sender_id = $1 and ${searchBy}::text like '%${search}%' ORDER BY ${orderBy} ${sortType} LIMIT $2 OFFSET $3`;
-  const value = [sender_id, limit, offset];
-  db.query(quer, value, (err, res)=>{
-    cb(err, res.rows);
-  });
-};
-
-exports.countAllTrans = (searchBy, search, sender_id, cb)=> {
-  db.query(`SELECT * FROM transaction where sender_id = ${sender_id} and ${searchBy}::text like '%${search}%' `, (err, res)=>{
-    
-    if(err){
-      console.log(err);
-    }
-    cb(err, res.rowCount);
-    
-  });
-};
-
 
 exports.getProfileById = (id_user, cb) => {
   //console.log(id_user);

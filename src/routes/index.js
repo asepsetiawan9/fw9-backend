@@ -6,6 +6,7 @@ router.use('/auth', require('./auth')); // memanggil router login
 router.use('/admin/transactions', require('./admin/transactions')); // memanggil router transactions
 router.use('/admin/typetransaction', require('./admin/typeTrans'));
 
-router.use('/profile', require('./users/profile'));// memanggil router typetransactions
+router.use('/profile', require('./users/profile'));
+router.use('/transactions', require('./transUser'));// memanggil router typetransactions
 
 module.exports = router; //akan di gunakan di root folder

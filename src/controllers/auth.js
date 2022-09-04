@@ -50,16 +50,20 @@ exports.login = (req, res)=>{
       return response(res, 'User Not Found', null, null, 400);
     }
     const user = results.rows[0];
+    // console.log(user);
+    const id = user.id;
     bcrypt.compare(password, user.password)
       .then((cpRes)=>{
         if(cpRes){
+          console.log();
           const token = jwt.sign({id: user.id}, APP_SECRET || 'D3f4uLt');
-          return response(res, 'Login Success', [token]);
+          return response(res, 'Login Success', [{id, token}]);
         }
         return response(res, 'Check your email and pasword', null, null, 400);
 
       })
-      .catch(e => {
+      // eslint-disable-next-line no-unused-vars
+      .catch(err => {
         return response(res, 'Check your email and pasword', null, null, 400);
       });
   });
