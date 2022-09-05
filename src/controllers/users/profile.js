@@ -16,7 +16,7 @@ exports.detailProfile = (req, res)=>{
     if(results.length > 1 ){
       return res.redirect('/404');
     }else{
-      return response(res, 'This Your Profile', results);
+      return response(res, 'This Your Profile', results[0]);
       
     }
 
@@ -50,7 +50,7 @@ exports.updateProfile = (req, res) => {
   let filename = null;
 
   if(req.file){
-    filename = req.file.filename;
+    filename = req.file.path;
   }
 
   profileUserModel.updateProfile(id_user, filename, req.body, (err, results)=>{

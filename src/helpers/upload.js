@@ -1,15 +1,26 @@
-const path = require('path');
+// const path = require('path');
 const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinaryUpload = require('./cloudinary');
 const {SIZE_IMG_LIMIT} = process.env;
 const filesize = Number(SIZE_IMG_LIMIT);
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(global.__basepath, 'assets', 'uploads'));
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split('/')[1];
-    cb(null, Date.now() + '_ZWALET.' + ext);
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, path.join(global.__basepath, 'assets', 'uploads'));
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     cb(null, Date.now() + '_ZWALET.' + ext);
+//   }
+// });
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinaryUpload,
+  params: {
+    folder: 'arttos_cloudinary_folder',
+    format: async (req, file) => 'png',
+    public_id: (req, file) => new Date().getTime()
   }
 });
 

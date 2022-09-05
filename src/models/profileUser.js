@@ -11,7 +11,7 @@ exports.userById = (id, cb) => {
 
 exports.detailProfile = (id_user, cb) => {
   console.log(id_user);
-  const quer = 'SELECT * FROM profile WHERE id_user=$1';
+  const quer = 'SELECT profile.*, users.email, users.username, users.pin FROM profile INNER JOIN users ON users.id = profile.id_user  WHERE id_user=$1';
   const value = [id_user];
   db.query(quer, value, (err, res)=>{
     console.log(quer);
@@ -21,7 +21,7 @@ exports.detailProfile = (id_user, cb) => {
 
 exports.getProfileById = (id_user, cb) => {
   //console.log(id_user);
-  const quer = 'SELECT * FROM profile WHERE id_user=$1';
+  const quer = 'SELECT profile.*, users.email, users.username, users.pin FROM profile INNER JOIN users ON users.id = profile.id_user  WHERE id_user=$1';
   const value = [id_user];
   db.query(quer, value, (err, res)=>{
     cb(err, res.rows);
