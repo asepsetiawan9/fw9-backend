@@ -61,13 +61,39 @@ exports.deleteUser = (id, cb) => {
   });
 };
 
-exports.detailUser = (id, cb) => {
-  const quer = 'SELECT username, email, password, pin FROM users WHERE id=$1';
-  const value = [id];
-  db.query(quer, value, (err, res)=>{
+// exports.detailUser = (id, cb) => {
+//   const quer = 'SELECT username, email, password, pin FROM users WHERE id=$1';
+//   const value = [id];
+//   db.query(quer, value, (err, res)=>{
+//     if(err) {
+//       throw err;
+//     }
+//     cb(res.rows);
+//   });
+// };
+
+exports.getAlluserExpectLogin = (searchBy, keyword, limit=Number(DATA_LIMIT), offset=0, orderBy, sortType, user_login, cb) => {
+  const quer = `SELECT users.id, profile.fullname, profile.phone, profile.balance, profile.picture
+  FROM users INNER JOIN profile ON users.id = profile.id_user  
+  WHERE users.id != $3 AND ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`;
+  const values = [limit, offset, user_login];
+  db.query(quer, values, (err, res) => {
+    console.log(quer);
     if(err) {
-      throw err;
+      console.log(err);
     }
-    cb(res.rows);
+    cb(err, res.rows);
+  });
+};
+exports.countAlluserExpectLogin = (searchBy, keyword, limit=Number(DATA_LIMIT), offset=0, orderBy, sortType, user_login, cb) => {
+  db.query(`SELECT users.id, profile.fullname, profile.phone, profile.balance
+  FROM users INNER JOIN profile ON users.id = profile.id_user  
+  WHERE users.id != $3 AND ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`,
+  [limit, offset, user_login], (err, res) => {
+    console.log(res);
+    if(err) {
+      console.log(err);
+    }
+    cb(err, res.rowCount);
   });
 };

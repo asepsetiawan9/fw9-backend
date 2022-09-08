@@ -12,7 +12,7 @@ exports.topUp = (req, res)=>{
     if (err) {
       return errResponse(err, res);
     }else{
-      return response(res, 'TopUp successfully', [{TopUp, note}]);
+      return response(res, 'TopUp successfully', {TopUp, note});
     }
   });
 };

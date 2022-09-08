@@ -3,6 +3,7 @@ const users = require('express').Router();
 const userController = require('../controllers/users');
 const { body } = require('express-validator');
 const bcrypt = require('bcrypt');
+const authMiddle = require('../middleware/auth');
 
 const userValidator = [
   body('email')
@@ -26,11 +27,15 @@ const userValidator = [
 ];
 
 
-users.get('/', body('limit').toInt(), body('page').toInt(),userController.getAllUsers);
-users.post('/', ...userValidator, userController.createUser);
-users.patch('/:id', ...userValidator, userController.editUser);
-users.delete('/:id', userController.deleteUser);
-users.get('/:id', userController.detailUser);
+// users.get('/', body('limit').toInt(), body('page').toInt(),userController.getAllUsers);
+// users.post('/', ...userValidator, userController.createUser);
+// users.patch('/:id', ...userValidator, userController.editUser);
+// users.delete('/:id', userController.deleteUser);
+// users.get('/:id', userController.detailUser);
+// users.get('/allUser', authMiddle, userController.transHistory);
+users.get('/all-users', authMiddle, body('limit').toInt(), body('page').toInt(),userController.getAlluserExpectLogin);
+
+
 
 
 

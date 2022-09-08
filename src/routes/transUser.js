@@ -18,7 +18,7 @@ const validationTransfer = [
     .exists({checkFalsy: true}).withMessage('Recipient Can\'t be Empty')
 ];
 transUser.post('/transfer', authMiddle, ...validationTransfer, validationCheck, transController.transfer);
-transUser.patch('/top-up', authMiddle, ...validationTopUp, validationCheck, transController.topUp);
+transUser.post('/top-up', authMiddle, ...validationTopUp, validationCheck, transController.topUp);
 transUser.get('/trans-history', authMiddle, transController.transHistory);
 transUser.get('/trans/:id', transController.detailTrans);
 // trans.delete('/:id', transController.deleteTrans);

@@ -122,7 +122,15 @@ exports.topUp=(id_user, data, cb)=>{
 
 exports.transHistory = (search, searchBy, limit=Number(DATA_LIMIT), offset=0, orderBy, sortType, sender_id, cb) => {
   // console.log(sender_id);
-  const quer = `SELECT * FROM transaction where sender_id = $1 and ${searchBy}::text like '%${search}%' ORDER BY ${orderBy} ${sortType} LIMIT $2 OFFSET $3`;
+  const quer = `SELECT transaction.id, amount, note, time_date, 
+  p1.id_user recipient_id, p1.fullname recipient_fullname, p1.picture recipientPic, 
+  p2.id_user sender_id, p2.fullname sender_fullname, p2.picture senderPic  
+  FROM transaction 
+  INNER JOIN users u1 ON u1.id = transaction.recipient_id 
+  INNER JOIN users u2 on u2.id = transaction.sender_id 
+  INNER JOIN profile p1 on p1.id_user = transaction.recipient_id 
+  INNER JOIN profile p2 on p2.id_user = transaction.sender_id 
+  WHERE transaction.sender_id = $1 and ${searchBy}::text like '%${search}%' ORDER BY ${orderBy} ${sortType} LIMIT $2 OFFSET $3`;
   const value = [sender_id, limit, offset];
   db.query(quer, value, (err, res)=>{
     cb(err, res.rows);

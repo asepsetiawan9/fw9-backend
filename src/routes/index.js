@@ -8,5 +8,6 @@ router.use('/admin/typetransaction', require('./admin/typeTrans'));
 
 router.use('/profile', require('./users/profile'));
 router.use('/transactions', require('./transUser'));// memanggil router typetransactions
+router.use('/users', require('./users'));
 
 module.exports = router; //akan di gunakan di root folder
