@@ -78,32 +78,32 @@ exports.deleteUser = (req, res)=>{
   });
 };
 
-// exports.detailUser = (req, res)=>{
-//   const {id} =req.params;
-//   userModel.detailUser(id, (results)=>{
-//     //console.log(results.length);
-//     if(results.length > 0 ){
-//       return response(res, 'This Users Details', results[0]); 
-//     }else{
-//       return res.redirect('/404');
-//     }
-//   });
-// };
+exports.detailUser = (req, res)=>{
+  const {id} =req.params;
+  // console.log(id);
+  userModel.detailUser(id, (results)=>{
+    if(results.length > 0 ){
+      return response(res, 'This Users Details', results[0]); 
+    }else{
+      return res.redirect('/404');
+    }
+  });
+};
 
-exports.getAlluserExpectLogin = (req, res)=>{
+exports.getallusers = (req, res)=>{
   const id= req.authUser.id;
   const {searchBy='fullname', search ='', limit=parseInt(DATA_LIMIT), page=1, orderBy ='id', sortType='ASC' } = req.query;
   // console.log(search);
   const offset = (page-1) * limit;
   
-  userModel.getAlluserExpectLogin(searchBy, search, limit, offset, orderBy, sortType, id,(err, results)=>{
+  userModel.getallusers(searchBy, search, limit, offset, orderBy, sortType, id,(err, results)=>{
     //console.log(err);
     if(results.length < 1){
       return res.redirect('/404');
     }else{
       
       const infoPage = {};
-      userModel.countAlluserExpectLogin(searchBy, search, limit, offset, orderBy, sortType, id, (err, totalData) =>{
+      userModel.countAllusers(searchBy, search, limit, offset, orderBy, sortType, id, (err, totalData) =>{
         infoPage.totalData = totalData;
         infoPage.totalPage = Math.ceil(totalData/limit);
         infoPage.currPage = parseInt(page);
