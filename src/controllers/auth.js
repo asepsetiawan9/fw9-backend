@@ -52,12 +52,13 @@ exports.login = (req, res)=>{
     const user = results.rows[0];
     // console.log(user);
     const id = user.id;
+    const pin = user.pin;
     bcrypt.compare(password, user.password)
       .then((cpRes)=>{
         if(cpRes){
           console.log();
           const token = jwt.sign({id: user.id}, APP_SECRET || 'D3f4uLt');
-          return response(res, 'Login Success', [{id, token}]);
+          return response(res, 'Login Success', [{id, token, pin}]);
         }
         return response(res, 'Check your email and pasword', null, null, 400);
 
