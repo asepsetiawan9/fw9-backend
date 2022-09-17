@@ -1,7 +1,7 @@
 const profileUser = require('express').Router();
 const authMiddle = require('../../middleware/auth');
 const { body } = require('express-validator');
-const profileController = require('../../controllers/users/profile');
+const profileController = require('../../controllers/profile');
 const uploadFile = require('../../middleware/singleUpload');
 const validationCheck = require('../../middleware/checkValidation');
 const bcrypt = require('bcrypt');
