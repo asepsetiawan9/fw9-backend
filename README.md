@@ -16,14 +16,14 @@ ArTTos backend is architectural for an application program interface (API) that 
 - Node Js
 - Cloudynary (for storage pictures)
 - Json Web Token 
-- .etc you can see another requirements on pacakage.json
+- .etc Anda dapat melihat persyaratan lain di pacakage.json
 
 <h2> How to use This Resfull API </h2>
 <hr>
 
 1. Clone this project
-2. Open this project using code editor
-3. Type npm install on your terminal (on folder this project)
+2. Open this project using the code editor
+3. Type npm install on your terminal (on the folder this project)
 4. Set up .env (if the file doesn't exist, create a .env file)
 5. Export Database, you can download Database [here](https://drive.google.com/file/d/1g_Nu5OFJLDflH_SVjtUiMxJEOpTMralY/view?usp=sharing)
 6. Export postman file you can use file [this](https://drive.google.com/file/d/1zepZsElMKeAFdM6v8GAoOFKrE2MvtmxL/view?usp=sharing)
