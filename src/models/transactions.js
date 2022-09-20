@@ -123,7 +123,7 @@ exports.topUp=(id_user, data, cb)=>{
 exports.transHistory = (search, searchBy, limit=Number(DATA_LIMIT), offset=0, orderBy, sortType, sender_id, cb) => {
   // console.log(sender_id);
   const quer = `SELECT transaction.id, amount, note, time_date, 
-  p1.id_user recipient_id, p1.fullname recipient_fullname, p1.picture recipientPic, 
+  p1.id_user recipient_id, p1.fullname recipient_fullname, p1.picture recipientPic, p1.phone recipient_phone, 
   p2.id_user sender_id, p2.fullname sender_fullname, p2.picture senderPic  
   FROM transaction 
   INNER JOIN users u1 ON u1.id = transaction.recipient_id 
