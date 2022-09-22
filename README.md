@@ -16,7 +16,7 @@ ArTTos backend is architectural for an application program interface (API) that 
 - Node Js
 - Cloudynary (for storage pictures)
 - Json Web Token 
-- .etc Anda dapat melihat persyaratan lain di pacakage.json
+- .etc You can see other requirements at pacakage.json
 
 <h2> How to use This Resfull API </h2>
 <hr>
@@ -27,7 +27,7 @@ ArTTos backend is architectural for an application program interface (API) that 
 4. Set up .env (if the file doesn't exist, create a .env file)
 5. Export Database, you can download Database [here](https://drive.google.com/file/d/1g_Nu5OFJLDflH_SVjtUiMxJEOpTMralY/view?usp=sharing)
 6. Export postman file you can use file [this](https://drive.google.com/file/d/1zepZsElMKeAFdM6v8GAoOFKrE2MvtmxL/view?usp=sharing)
-7. You can also access this RESTFull API in url https://vercel.com/asepsetiawan9/fw9-backend
+7. You can also access this RESTFull API in url https://fw9-backend-tau.vercel.app/
 
 <h2> Endpoint </h2>
 <hr>
@@ -107,11 +107,6 @@ ArTTos backend is architectural for an application program interface (API) that 
     <td>GET</td>
     <td>Show transaction by ID</td>
   </tr>
-   <!-- <tr>
-    <td>/admin/users/:id</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr> -->
    <tr>
     <td>/transactions/trans-history</td>
     <td>GET</td>
@@ -122,11 +117,7 @@ ArTTos backend is architectural for an application program interface (API) that 
     <td>GET</td>
     <td>Show user by ID</td>
   </tr>
-  <!-- <tr>
-    <td>/admin/users</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr> -->
+
 </table>
 
 <h2> Set Up .env </h2>
