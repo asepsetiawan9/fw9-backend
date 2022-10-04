@@ -12,7 +12,7 @@ const validation = [
     .isMobilePhone('id-ID').withMessage('Phone number must be indonesian code'),
 ];
 profile.post('/', uploadFile, ...validation, validationCheck, profielController.createProfile);
-profile.patch('/:id', uploadFile, ...validation, validationCheck, profielController.updateProfile);
+profile.patch('/:id', uploadFile, profielController.updateProfile);
 profile.get('/:id', profielController.detailProfile);
 profile.delete('/:id', profielController.deleteProfile);
 profile.get('/', profielController.getAllProfile);
