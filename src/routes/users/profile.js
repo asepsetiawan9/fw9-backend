@@ -6,12 +6,12 @@ const uploadFile = require('../../middleware/singleUpload');
 const validationCheck = require('../../middleware/checkValidation');
 const bcrypt = require('bcrypt');
 
-const validation = [
-  body('fullname')
-    .isString().withMessage('Fullname Must be String'),
-  body('phone')
-    .isMobilePhone('id-ID').withMessage('Phone number must be indonesian code')
-];
+// const validation = [
+//   body('fullname')
+//     .isString().withMessage('Fullname Must be String'),
+//   body('phone')
+//     .isMobilePhone('id-ID').withMessage('Phone number must be indonesian code')
+// ];
 const validationPhone = [
   body('phone')
     .isMobilePhone('id-ID').withMessage('Phone number must be indonesian code'),
@@ -38,7 +38,7 @@ const validationPin = [
 profileUser.get('/', authMiddle, body('limit').toInt(), body('page').toInt(), profileController.welcome);
 profileUser.get('/getprofile', authMiddle, profileController.detailProfile);
 profileUser.post('/createphone', authMiddle, ...validationPhone, validationCheck, profileController.createPhone);
-profileUser.patch('/updateprofile', authMiddle, uploadFile, ...validation, validationCheck, profileController.updateProfile);
+profileUser.patch('/updateprofile', authMiddle, uploadFile, profileController.updateProfile);
 profileUser.patch('/updatepassword', authMiddle, ...validationPassword, validationCheck, profileController.updatePassword);
 profileUser.patch('/updatepin', authMiddle, ...validationPin, validationCheck, profileController.updatePin);
 profileUser.patch('/updatephone', authMiddle, ...validationPhone, validationCheck, profileController.updatePhone);
