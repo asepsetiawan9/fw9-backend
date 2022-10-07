@@ -93,7 +93,6 @@ exports.detailUser = (req, res)=>{
 exports.getallusers = (req, res)=>{
   const id= req.authUser.id;
   const {searchBy='fullname', search ='', limit=parseInt(DATA_LIMIT), page=1, orderBy ='id', sortType='ASC' } = req.query;
-  // console.log(search);
   const offset = (page-1) * limit;
   
   userModel.getallusers(searchBy, search, limit, offset, orderBy, sortType, id,(err, results)=>{
@@ -103,14 +102,14 @@ exports.getallusers = (req, res)=>{
     }else{
       
       const infoPage = {};
-      userModel.countAllusers(searchBy, search, orderBy, sortType, id, (err, totalData) =>{
+      userModel.countAllusers(searchBy, search, id, (err, totalData) =>{
         infoPage.totalData = totalData;
         infoPage.totalPage = Math.ceil(totalData/limit);
         infoPage.currPage = parseInt(page);
         infoPage.limit = parseInt(limit);
         infoPage.nextPage = infoPage.currPage < infoPage.totalPage ? infoPage.currPage + 1 : null;
         infoPage.prevPage = infoPage.currPage > 1 ? infoPage.currPage -1 : null;
-        console.log(infoPage);
+        // console.log(infoPage);
         return response(res, 'Get All Users success', results, infoPage);
       });
     }

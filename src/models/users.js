@@ -64,22 +64,23 @@ exports.deleteUser = (id, cb) => {
 
 
 exports.getallusers = (searchBy, keyword, limit=Number(DATA_LIMIT), offset=0, orderBy, sortType, user_login, cb) => {
+  console.log(keyword);
   const quer = `SELECT users.id, profile.fullname, profile.phone, profile.balance, profile.picture
   FROM users INNER JOIN profile ON users.id = profile.id_user  
-  WHERE users.id != $3 OR ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`;
+  WHERE users.id != $3 AND ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`;
   const values = [limit, offset, user_login];
   db.query(quer, values, (err, res) => {
-    // console.log(quer);
+    //  console.log('ini ressss', res);
     if(err) {
       console.log(err);
     }
     cb(err, res.rows);
   });
 };
-exports.countAllusers = (searchBy, keyword, orderBy, sortType, user_login, cb) => {
+exports.countAllusers = (searchBy, keyword, user_login, cb) => {
   db.query(`SELECT users.id, profile.fullname, profile.phone, profile.balance
   FROM users INNER JOIN profile ON users.id = profile.id_user  
-  WHERE users.id != $1 AND ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType}`,
+  WHERE users.id != $1 AND ${searchBy} LIKE '%${keyword}%' `,
   [user_login], (err, res) => {
     // console.log(res);
     if(err) {
